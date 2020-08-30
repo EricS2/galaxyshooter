@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public bool _canTripleShot;
     [SerializeField]
     private GameObject _laserPrefab;
+    [SerializeField]
+    private GameObject _tripleShotPrefab;
+
     [SerializeField]
     private float _speed = 5.0f;
     [SerializeField]
@@ -29,27 +33,29 @@ public class Player : MonoBehaviour
         //disparar o laser
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0))
         {
-            //Time.time = é o tempo em segundos desde que a aplicação foi iniciada
-            // ou seja 3 minutos jogo Time.Time será 180 segundos
-            if (Time.time > _canFire)
-            {
-              Shoot();
-            }
+            Shoot();
         }
 
     }
 
     private void Shoot()
     {
-          //renderizar a prefab  na posição do jogador
-                //Instantiate(nome_prefab, posição do jogador, mantém o valor de rotação) 
-                // Instantiate(laserPrefab, transform.position, Quaternion.identity);
-                
-                //renderizar prefab acima do jogador
-                Instantiate(_laserPrefab, transform.position + new Vector3(0,0.88f,0),Quaternion.identity);
-                
+                    //Time.time = é o tempo em segundos desde que a aplicação foi iniciada
+            // ou seja 3 minutos jogo Time.Time será 180 segundos
+            if (Time.time > _canFire)
+            {
+                if (_canTripleShot == true)
+                {
+                    Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    //renderizar prefab acima do jogador
+                    Instantiate(_laserPrefab, transform.position + new Vector3(0,0.88f,0),Quaternion.identity);
+                }
                 //cooldown
                 _canFire = Time.time + _fireRate;
+            }
     }
 
     private void Movement()
