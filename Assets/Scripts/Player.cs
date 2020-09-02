@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public bool _canTripleShot;
+    public bool canTripleShot;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
             // ou seja 3 minutos jogo Time.Time será 180 segundos
             if (Time.time > _canFire)
             {
-                if (_canTripleShot == true)
+                if (canTripleShot == true)
                 {
                     Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
                 }
@@ -88,5 +88,17 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(9.5f, transform.position.y,0);
         }
 
+    }
+
+    public void TripleShotPowerupOn()
+    {
+        canTripleShot = true;
+        StartCoroutine(TripleShotPowerDownRoutine());
+    }
+
+    IEnumerator TripleShotPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        canTripleShot = false;
     }
 }

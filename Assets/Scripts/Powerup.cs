@@ -23,10 +23,16 @@ public class Powerup : MonoBehaviour
     {
         Debug.Log("Collided with: " + other.name);
         //acessar o player
-        Player player = other.GetComponent<Player>;
-        player.canTripleShot = true;
-        //destroy o power up na colisão
-        Destroy(this.gameObject);
+        if (other.tag == "Player") ;
+       Player player = other.GetComponent<Player>();
+       if (player != null)
+       {
+           player.TripleShotPowerupOn();
+           
+       }
 
+       
+       //destroy o power up na colisão
+      Destroy(this.gameObject); 
     }
 }
